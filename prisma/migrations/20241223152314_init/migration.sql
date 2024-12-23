@@ -8,7 +8,7 @@ CREATE TABLE `User` (
     `last_name` VARCHAR(191) NOT NULL,
     `role` VARCHAR(6) NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `updated_at` DATETIME(3) NOT NULL,
+    `updated_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `is_deleted` CHAR(1) NOT NULL DEFAULT 'N',
 
     UNIQUE INDEX `User_username_key`(`username`),

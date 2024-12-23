@@ -1,5 +1,5 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { UserService } from 'src/user/user.service';
+import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcryptjs';
 import { User as UserModel } from '@prisma/client';
 import { JwtService } from '@nestjs/jwt';
@@ -9,9 +9,9 @@ import { TokenPayload } from './interfaces/token-payload.interface';
 @Injectable()
 export class AuthService {
     constructor(
-        private readonly userService: UserService,
+        private readonly usersService: UsersService,
         private readonly jwtService: JwtService
-    ) {}
+    ) { }
 
     async login(user: UserModel, response: Response) {
         const expiresAccessToken = new Date();
@@ -37,10 +37,10 @@ export class AuthService {
             expires: expiresAccessToken
         };
     }
-    
+
     async verifyUser(username: string, password: string) {
         try {
-            const user: UserModel = await this.userService.findOneByUsername(username);
+            const user: UserModel = await this.usersService.findOneByUsername(username);
 
             const authenticated = await bcrypt.compare(password, user.password);
 

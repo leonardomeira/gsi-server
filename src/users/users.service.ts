@@ -6,9 +6,9 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
-export class UserService {
-  constructor(private readonly prismaService: PrismaService) {}
-  
+export class UsersService {
+  constructor(private readonly prismaService: PrismaService) { }
+
   async create(createUserDto: CreateUserDto): Promise<UserModel> {
     const newUserFromReq = createUserDto;
 
@@ -48,7 +48,7 @@ export class UserService {
     try {
 
       const requestedUser = await this.prismaService.user.findUnique({
-        where: {id}
+        where: { id }
       });
 
       if (!requestedUser) {
@@ -68,7 +68,7 @@ export class UserService {
     try {
 
       const requestedUser = await this.prismaService.user.findUnique({
-        where: {username}
+        where: { username }
       });
 
       if (!requestedUser) {
@@ -91,7 +91,7 @@ export class UserService {
   async remove(id: number): Promise<string> {
     try {
       await this.prismaService.user.delete({
-        where: {id}
+        where: { id }
       });
 
       return "Usuário removido com sucesso!";
