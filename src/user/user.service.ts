@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { User as UserModel } from '@prisma/client';
 import * as bcrypt from 'bcryptjs';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -64,7 +64,7 @@ export class UserService {
     };
   }
 
-  async findOneByUsername(username: string): Promise<UserModel | String> {
+  async findOneByUsername(username: string): Promise<UserModel> {
     try {
 
       const requestedUser = await this.prismaService.user.findUnique({
@@ -72,7 +72,7 @@ export class UserService {
       });
 
       if (!requestedUser) {
-        return "Usuário não encontrado."
+        throw new NotFoundException('Usuário não encontrado.');
       }
 
       return requestedUser;
